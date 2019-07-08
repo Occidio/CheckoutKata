@@ -7,19 +7,19 @@ namespace CheckoutKata.test
     public class CheckoutTests
     {
         [Test]
-        public void Scan()
+        [TestCase("A", 50)]
+        [TestCase("B", 30)]
+        [TestCase("C", 20)]
+        [TestCase("D", 15)]
+        public void Scan(string sku, int expectedPrice)
         {
             var checkout = new Checkout();
 
-            checkout.Scan("A");
-        }
-
-        [Test]
-        public void GetTotalPrice()
-        {
-            var checkout = new Checkout();
+            checkout.Scan(sku);
 
             var price = checkout.GetTotalPrice();
+
+            Assert.AreEqual(expectedPrice, price);
         }
     }
 }
