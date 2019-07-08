@@ -24,7 +24,7 @@ namespace CheckoutKata.test
 
         [Test]
         [TestCase("A", 2, 100)]
-        [TestCase("B", 3, 90)]
+        [TestCase("C", 2, 40)]
         public void scan_multiple_times_single_item(string sku, int amount, int expectedPrice)
         {
             var checkout = new Checkout();

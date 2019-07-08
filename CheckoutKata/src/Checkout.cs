@@ -22,8 +22,8 @@ namespace CheckoutKata.src
 
             discounts = new List<IDiscount>()
             {
-                new Discount{SKU="A", Amount= 3, Price = 130 },
-                new Discount{SKU="B", Amount= 2, Price = 45 }
+                new Discount{SKU="A", Amount= 3, Value = 20 },
+                new Discount{SKU="B", Amount= 2, Value = 15 }
             };
 
             orders = new List<IOrder>();
@@ -32,6 +32,15 @@ namespace CheckoutKata.src
         public int GetTotalPrice()
         {
             int price = 0;
+            foreach(Discount discount in discounts)
+            {
+                var order = orders.Find(o => o.Product.SKU == discount.SKU);
+                if (order != null)
+                {
+                    order.Discount = CalculateDiscount(discount, order.Quantity);
+                }
+            }
+
             foreach (Order order in orders)
             {
                 price += order.Price();
@@ -52,6 +61,10 @@ namespace CheckoutKata.src
                 order = new Order { Product = availableProducts.Find((av) => av.SKU == item), Quantity = 1 };
                 orders.Add(order);
             }
+        }
+        private int CalculateDiscount(IDiscount discount, int quantity)
+        {
+            return (quantity / discount.Amount) * discount.Value;
         }
     }
 }

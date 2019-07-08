@@ -5,6 +5,6 @@ namespace CheckoutKata.src
     {
         string SKU { get; set; }
         int Amount { get; set;}
-        int Price { get; set; }
+        int Value { get; set; }
     }
 }
