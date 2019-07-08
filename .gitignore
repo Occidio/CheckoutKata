@@ -26,3 +26,4 @@ $RECYCLE.BIN/
 CheckoutKata/bin/Debug/*.*
 CheckoutKata/obj/Debug/*.*
 packages/*
+.vs/CheckoutKata/v16/.suo
