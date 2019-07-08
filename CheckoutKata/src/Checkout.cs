@@ -3,28 +3,32 @@ namespace CheckoutKata.src
 {
     class Checkout : ICheckout
     {
-        private string scannedProduct;
+        private Product[] availableProducts;
+        private Product scannedProduct;
 
+        public Checkout()
+        {
+            availableProducts = new Product[] {
+                new Product { SKU = "A", Price = 50 },
+                new Product { SKU = "B", Price = 30 },
+                new Product { SKU = "C", Price = 20 },
+                new Product { SKU = "D", Price = 15 }
+            };
+        }
         public int GetTotalPrice()
         {
-            switch(scannedProduct)
-            {
-                case "A":
-                    return 50;
-                case "B":
-                    return 30;
-                case "C":
-                    return 20;
-                case "D":
-                    return 15;
-                default:
-                    return 0;
-            }
+            return scannedProduct.Price;
         }
 
         public void Scan(string item)
         {
-            scannedProduct = item;
+            for (int i = 0; i < availableProducts.Length; i++)
+            {
+                if (availableProducts[i].SKU == item)
+                {
+                    scannedProduct = availableProducts[i];
+                }
+            }
         }
     }
 }

@@ -51,6 +51,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\Checkout.cs" />
     <Compile Include="src\ICheckout.cs" />
+    <Compile Include="src\IProduct.cs" />
+    <Compile Include="src\Product.cs" />
     <Compile Include="test\CheckoutTests.cs" />
   </ItemGroup>
   <ItemGroup />
