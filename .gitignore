@@ -21,3 +21,8 @@ $RECYCLE.BIN/
 # =========================
 # Operating System Files
 # =========================
+.vs/CheckoutKata/v16/Server/sqlite3/*.*
+
+CheckoutKata/bin/Debug/*.*
+CheckoutKata/obj/Debug/*.*
+packages/*
