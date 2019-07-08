@@ -7,41 +7,30 @@ namespace CheckoutKata.src
 {
     class Checkout : ICheckout
     {
-        private List<IProduct> availableProducts;
-        private List<IOrder> orders;
-        private List<IDiscount> discounts;
+        private readonly IEnumerable<IProduct> AvailableProducts;
+        private List<IOrder> Orders;
+        private readonly IEnumerable<IDiscount> AvailableDiscounts;
 
-        public Checkout()
+        public Checkout(IEnumerable<IProduct> products, IEnumerable<IDiscount> discounts)
         {
-            availableProducts = new List<IProduct>() {
-                new Product { SKU = "A", Price = 50 },
-                new Product { SKU = "B", Price = 30 },
-                new Product { SKU = "C", Price = 20 },
-                new Product { SKU = "D", Price = 15 }
-            };
-
-            discounts = new List<IDiscount>()
-            {
-                new Discount{SKU="A", Amount= 3, Value = 20 },
-                new Discount{SKU="B", Amount= 2, Value = 15 }
-            };
-
-            orders = new List<IOrder>();
+            AvailableProducts = products;
+            AvailableDiscounts = discounts;
+            Orders = new List<IOrder>();
 
         }
         public int GetTotalPrice()
         {
             int price = 0;
-            foreach(Discount discount in discounts)
+            foreach(Discount discount in AvailableDiscounts)
             {
-                var order = orders.Find(o => o.Product.SKU == discount.SKU);
+                var order = Orders.Find(o => o.Product.SKU == discount.SKU);
                 if (order != null)
                 {
                     order.Discount = CalculateDiscount(discount, order.Quantity);
                 }
             }
 
-            foreach (Order order in orders)
+            foreach (Order order in Orders)
             {
                 price += order.Price();
             }
@@ -50,7 +39,7 @@ namespace CheckoutKata.src
 
         public void Scan(string item)
         {
-            var order = orders.Find(o => o.Product.SKU == item);
+            var order = Orders.Find(o => o.Product.SKU == item);
 
             if (order != null)
             {
@@ -58,8 +47,8 @@ namespace CheckoutKata.src
             }
             else
             {
-                order = new Order { Product = availableProducts.Find((av) => av.SKU == item), Quantity = 1 };
-                orders.Add(order);
+                order = new Order { Product = AvailableProducts.ToList().Find((av) => av.SKU == item), Quantity = 1 };
+                Orders.Add(order);
             }
         }
         private int CalculateDiscount(IDiscount discount, int quantity)
